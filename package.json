@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/next/dist/bin/next",
-    "build": "./node_modules/next/dist/bin/next build",
-    "start": "./node_modules/next/dist/bin/next start"
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,12 +15,16 @@
     "@zeit/next-css": "^1.0.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "dotenv": "^8.0.0",
     "html-entities": "^1.2.1",
     "isomorphic-unfetch": "^3.0.0",
     "moment": "^2.24.0",
     "next": "^8.1.0",
+    "next-images": "^1.1.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "styled-components": "^4.2.0"
+    "react-ga": "^2.6.0",
+    "styled-components": "^4.2.0",
+    "url": "^0.11.0"
   }
 }

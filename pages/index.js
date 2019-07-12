@@ -1,23 +1,50 @@
 import React from "react";
-import { Api } from "../src/utils";
+import Head from "next/head";
+import Link from "next/link";
 
-import { Featured } from "../src/components/post";
+import { Api, Styles } from "../src/utils";
+import { Header } from "../src/components/profile";
 
-import "bootstrap/dist/css/bootstrap-grid.min.css";
+import { Featured, TwoColumns } from "../src/components/post";
+
+import { BaseBar } from "../src/components/navigation";
 
 class Home extends React.Component {
   static async getInitialProps({ query }) {
-    const posts = await Api.getRecentPosts();
+    const journals = await Api.getRecentJournal();
+    const essays = await Api.getRecentEssays();
+    const tips = await Api.getRecentTips();
+
     return {
-      posts
+      journals,
+      essays,
+      tips
     };
   }
   render() {
     console.log("pages/index#render");
-    // console.log("pages/index#render props", this.props);
+    console.log("pages/index#render props", this.props.tips.length);
     return (
-      <div className="container">
-        <Featured posts={this.props.posts} />
+      <div className="container-fluid">
+        <Head>
+          <title>Journal - Jénaïc Cambré</title>
+          <style>
+            {`
+              body {
+                margin: 0;
+              }
+            `}
+          </style>
+        </Head>
+        <BaseBar isHome={false} />
+        <Header />
+        <Featured posts={this.props.journals} />
+        <TwoColumns
+          columnOneTitle={"Essay"}
+          columnOnePosts={this.props.essays}
+          columnTwoTitle={"Tips"}
+          columnTwoPosts={this.props.tips}
+        />
       </div>
     );
   }
