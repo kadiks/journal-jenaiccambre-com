@@ -25,7 +25,7 @@ const renderHomepage = async (app, req, res, parsedUrl, cb) => {
 const reRender = async (filepath, app, req, res, parsedUrl) => {
   console.log("rerendering homepage");
   const html = await app.renderToHTML(req, res, "/", parsedUrl);
-  fs.writeFile(filepath, html);
+  await fs.writeFile(filepath, html);
 };
 
 module.exports = renderHomepage;
