@@ -7,7 +7,7 @@ const renderHomepage = async (app, req, res, parsedUrl, cb) => {
   if (fs.existsSync(filepath) === false) {
     await reRender(filepath, app, req, res, parsedUrl);
   }
-  console.log("#3");
+  // console.log("#3");
   const stats = await fs.stat(filepath);
   //   console.log("src/server/renderHP stats", stats);
   const past24hoursTimestamp =
@@ -23,7 +23,7 @@ const renderHomepage = async (app, req, res, parsedUrl, cb) => {
 };
 
 const reRender = async (filepath, app, req, res, parsedUrl) => {
-  console.log("rerendering homepage");
+  // console.log("rerendering homepage");
   const html = await app.renderToHTML(req, res, "/", parsedUrl);
   await fs.writeFile(filepath, html);
 };
