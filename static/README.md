@@ -7,6 +7,10 @@ Generate social media card image based on the post title
 
 ## Changelog
 
+### 0.2.1
+
+- Add gzip compression
+
 ### 0.2.0
 
 - Layout and color change for [kyeda.app](kyeda.app)
