@@ -2,6 +2,9 @@ const { createCanvas, loadImage } = require("canvas-prebuilt");
 const path = require("path");
 const request = require("request-promise-native");
 const Config = require("../Config");
+const Entities = require("html-entities");
+
+const entities = new Entities.AllHtmlEntities();
 
 const WIDTH = 600;
 const HEIGHT = 315;
@@ -69,7 +72,8 @@ const generate = (pathname, cb) => {
   console.log("src/server/toJpg Will be generated");
 
   const post = getPost(postId, post => {
-    const str = post.title.rendered || "Personal development blog";
+    const str =
+      entities.decode(post.title.rendered) || "Personal development blog";
 
     const canvas = createCanvas(WIDTH, HEIGHT);
     const ctx = canvas.getContext("2d");
