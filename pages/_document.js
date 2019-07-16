@@ -45,7 +45,7 @@ class MyDocument extends Document {
             }}
           />
         </Head>
-        <body>
+        <body className={process.env.SITE_ID}>
           <Main />
           <NextScript />
         </body>

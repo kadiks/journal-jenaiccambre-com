@@ -17,19 +17,20 @@ class Featured extends React.Component {
         }}
       >
         <h3 className="col-12" style={{ textAlign: "center" }}>
-          Journal
+          {process.env.SITE_ID === "kyeda" ? "Tips" : "Journal"}
         </h3>
         {this.props.posts.map(post => {
           return (
             <div className="col-12 col-md-4" key={post.id}>
               <h2
                 style={{
-                  ...Styles.text.header
+                  ...Styles.text.header,
+                  textAlign: "center"
                 }}
               >
                 {moment(post.date).format(dateFormat)}
               </h2>
-              <Card {...post} />
+              <Card {...post} isFeatured />
             </div>
           );
         })}

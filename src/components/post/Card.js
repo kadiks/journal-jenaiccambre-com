@@ -15,6 +15,30 @@ const Container = styled.div`
 `;
 
 class Card extends React.Component {
+  getAnchor(customLink, title) {
+    return (
+      <h3
+        style={{
+          color: Styles.colors.main,
+          ...Styles.text.header,
+          display: "inline-block"
+        }}
+      >
+        <a
+          href={customLink}
+          style={{
+            color: "inherit",
+            fontSize: "inherit",
+            textDecoration: "none",
+            fontWeight: "inherit",
+            fontFamily: "inherit"
+          }}
+        >
+          {title.clean}
+        </a>
+      </h3>
+    );
+  }
   getFlag() {
     if (this.props.tags.indexOf(81) < 0) {
       return null;
@@ -27,9 +51,43 @@ class Card extends React.Component {
       />
     );
   }
+
+  getLink() {
+    const {
+      title,
+      excerpt,
+      link,
+      id,
+      date,
+      destLink,
+      mainCategory
+    } = this.props;
+    // const customLink = `/posts/${id}${link.replace(Config.wordpress.host, "")}`;
+    let customLink = destLink;
+    let isExternal = false;
+    if (process.env.SITE_ID === "jenaic" && mainCategory === "tip") {
+      isExternal = true;
+      customLink = `${Config.kyeda.site.protocol}://${
+        Config.kyeda.site.host
+      }${customLink}`;
+    }
+
+    if (isExternal) {
+      return this.getAnchor(customLink, title);
+    }
+    return <Link href={customLink}>{this.getAnchor(customLink, title)}</Link>;
+  }
+
   render() {
-    const { title, excerpt, link, id, date } = this.props;
-    const customLink = `/posts/${id}${link.replace(Config.wordpress.host, "")}`;
+    const {
+      title,
+      excerpt,
+      link,
+      id,
+      date,
+      destLink,
+      mainCategory
+    } = this.props;
     return (
       <div
         style={{
@@ -46,19 +104,8 @@ class Card extends React.Component {
         }}
       >
         {this.getFlag()}
-        <Link href={customLink}>
-          <h3
-            style={{
-              color: Styles.colors.main,
-              ...Styles.text.header,
-              display: "inline-block"
-            }}
-            dangerouslySetInnerHTML={{
-              __html: title.rendered
-            }}
-          />
-        </Link>
-        {this.props.displayDate && (
+        {this.getLink()}
+        {this.props.isFeatured === false && (
           <p
             style={{
               margin: 0,
@@ -67,7 +114,9 @@ class Card extends React.Component {
               marginTop: -15
             }}
           >
-            {moment(date).format("MMM YYYY")}
+            {moment(date).format(
+              mainCategory === "journal" ? "ddd MMM, Do" : "MMM YYYY"
+            )}
           </p>
         )}
         <div
@@ -84,7 +133,7 @@ class Card extends React.Component {
 }
 
 Card.defaultProps = {
-  displayDate: false
+  isFeatured: false
 };
 
 export default Card;

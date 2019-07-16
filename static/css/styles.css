@@ -27,12 +27,19 @@ h6 {
 .social-icons .fa:hover {
   color: #fff !important;
 }
-.social-icons .fa {
+body.jenaic .social-icons .fa {
   padding: 10px 12px;
   color: #b90000;
 }
+body.kyeda .social-icons .fa {
+  padding: 10px 12px;
+  color: #374976;
+}
 .fa-twitter:hover {
   background-color: #00aced;
+}
+.fa-instagram:hover {
+  background-color: #000000;
 }
 .fa-youtube:hover {
   background-color: #e64a41;
@@ -50,6 +57,7 @@ h6 {
   height: 2em;
   border-radius: 5px;
   border-width: 1px;
+  border-color: #aaa;
   border-style: solid;
   width: 100%;
   padding-top: 1em;
@@ -58,9 +66,13 @@ h6 {
   margin-bottom: 15px;
 }
 
-.comment-form input:focus,
-.comment-form textarea:focus {
+body.jenaic .comment-form input:focus,
+body.jenaic .comment-form textarea:focus {
   outline: #ffb4b4 auto 3px;
+}
+body.kyeda .comment-form input:focus,
+body.kyeda .comment-form textarea:focus {
+  outline: #8299d2 auto 3px;
 }
 /* .comments h2,
 .comments h3,

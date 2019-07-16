@@ -120,7 +120,7 @@ class Form extends React.Component {
             <div className="col">
               <label style={labelStyles}>Name</label>
               <input
-                style={{ inputStyles }}
+                style={inputStyles}
                 name="name"
                 placeholder="Name"
                 value={this.state.name}
@@ -132,7 +132,7 @@ class Form extends React.Component {
             <div className="col">
               <label style={labelStyles}>Email</label>
               <input
-                style={{ inputStyles }}
+                style={inputStyles}
                 name="email"
                 placeholder="Email"
                 value={this.state.email}

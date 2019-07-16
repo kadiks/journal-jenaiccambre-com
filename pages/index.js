@@ -11,6 +11,10 @@ import { BaseBar } from "../src/components/navigation";
 
 class Home extends React.Component {
   static async getInitialProps({ query }) {
+    // console.log(
+    //   "pages/index#getInitialProps process.env.SITE_ID",
+    //   process.env.SITE_ID
+    // );
     const journals = await Api.getRecentJournal();
     const essays = await Api.getRecentEssays();
     const tips = await Api.getRecentTips();
@@ -22,12 +26,17 @@ class Home extends React.Component {
     };
   }
   render() {
-    console.log("pages/index#render");
-    console.log("pages/index#render props", this.props.tips.length);
+    // console.log("pages/index#render");
+    // console.log("pages/index#render props", this.props.tips.length);
+    // console.log("pages/index#render process.env.SITE_ID", process.env.SITE_ID);
     return (
       <div className="container-fluid">
         <Head>
-          <title>Journal - Jénaïc Cambré</title>
+          <title>
+            {process.env.SITE_ID === "kyeda"
+              ? "Kyeda's blog - Personal development - Know Yourself Embrace Discomfort and take Action"
+              : "Journal - Jénaïc Cambré"}
+          </title>
           <style>
             {`
               body {
@@ -38,12 +47,22 @@ class Home extends React.Component {
         </Head>
         <BaseBar isHome={false} />
         <Header />
-        <Featured posts={this.props.journals} />
+        <Featured
+          posts={
+            process.env.SITE_ID === "kyeda"
+              ? this.props.tips
+              : this.props.journals
+          }
+        />
         <TwoColumns
           columnOneTitle={"Essay"}
           columnOnePosts={this.props.essays}
-          columnTwoTitle={"Tips"}
-          columnTwoPosts={this.props.tips}
+          columnTwoTitle={process.env.SITE_ID === "kyeda" ? "Journal" : "Tips"}
+          columnTwoPosts={
+            process.env.SITE_ID === "kyeda"
+              ? this.props.journals
+              : this.props.tips
+          }
         />
       </div>
     );

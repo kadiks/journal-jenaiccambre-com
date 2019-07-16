@@ -7,6 +7,7 @@ import moment from "moment";
 import { Api, Styles } from "../src/utils";
 import { Comments, Form } from "../src/components/comment";
 import { BaseBar } from "../src/components/navigation";
+import { MetaShares } from "../src/components/social";
 
 class Post extends React.Component {
   static async getInitialProps({ req }) {
@@ -14,8 +15,8 @@ class Post extends React.Component {
     const matches = req.url.replace("/posts/", "").match(/^\d+/i);
 
     console.log("matches", matches);
-    console.log("id", id);
     const id = parseInt(matches[0]);
+    console.log("id", id);
     const post = await Api.getPost({ id });
 
     const comments = await Api.getCommentsByPost({ id });
@@ -25,6 +26,13 @@ class Post extends React.Component {
     //   this.setState({
     //     comments
     //   });
+
+    // console.log("pages/post#getInitialProps post", Object.keys(post).length);
+    // console.log("pages/post#getInitialProps post.title", post.title.rendered);
+    // console.log(
+    //   "pages/post#getInitialProps comments",
+    //   Object.keys(comments).length
+    // );
 
     return {
       post,
@@ -53,11 +61,13 @@ class Post extends React.Component {
   render() {
     // console.log("pages/post#render");
     // console.log("pages/post#render props", this.props);
-    const { title, content, id } = this.props.post;
+
+    const { title, content, id, date } = this.props.post;
     return (
       <div className="container-fluid">
         <Head>
-          <title>{title.rendered}</title>
+          <title>{title.clean}</title>
+          <MetaShares post={this.props.post} />
           <style>
             {`
                  h1, h2, h3, h4, h5, h6 {
@@ -77,15 +87,20 @@ class Post extends React.Component {
                   border-left-color: ${Styles.colors.main};
                   border-left-style: solid;
                   margin: 0 0 0 20px;
-                  background: rgba(185, 0, 0, .3);
                   padding: 1px 0 1px 10px;
+                }
+                body.jenaic blockquote {
+                  background: rgba(185, 0, 0, .3);
+                }
+                body.kyeda blockquote {
+                  background: rgba(55, 73, 118, .3);
                 }
                 
             `}
           </style>
         </Head>
         <BaseBar />
-        <div className="row">
+        <div className="row" style={{ marginTop: 10 }}>
           <div className="col-10 offset-1 col-md-8 offset-md-2">
             <h1
               style={{
@@ -94,8 +109,15 @@ class Post extends React.Component {
                 textAlign: "center"
               }}
             >
-              {title.rendered}
+              {title.clean}
             </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-10 offset-1 col-md-8 offset-md-2">
+            <time dateTime={moment(date).format("YYYY-MM-DD")}>
+              {moment(date).format("ddd MMM, Do")}
+            </time>
           </div>
         </div>
         <div className="row">

@@ -1,22 +1,25 @@
 import { SocialIcon } from "../core";
 const socialIcons = [
   {
-    name: "twitter",
-    link: "http://twitter.com/kryptonikco/"
+    name: "instagram",
+    link:
+      process.env.SITE_ID === "kyeda"
+        ? "https://instagram.com/kyeda.app"
+        : "https://instagram.com/jenaiccambre/"
   },
   {
     name: "youtube",
     link: "https://www.youtube.com/channel/UCk_jcw5WJA2krzIUSvixUYg"
   },
   {
-    name: "linkedin",
-    link: "https://www.linkedin.com/in/jenaiccambre/"
+    name: "twitter",
+    link: "https://twitter.com/kryptonikco/"
   }
 ];
 export default () => {
   return (
     <div className="row social-icons" style={{ paddingBottom: 20 }}>
-      <div className="col-4 offset-4">
+      <div className="col-12 col-md-4 offset-md-4">
         <div className="row">
           {socialIcons.map((props, index) => (
             <SocialIcon key={index} color={"#B90000"} {...props} />

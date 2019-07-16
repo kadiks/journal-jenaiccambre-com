@@ -67,7 +67,13 @@ class Comments extends React.Component {
                     </div>
                     <div className="col-10">
                       <h3>{comment.author_name}</h3>
-                      <p style={{ marginTop: -15 }}>
+                      <p
+                        style={{
+                          marginTop: -15,
+                          fontSize: "0.9em",
+                          fontStyle: "italic"
+                        }}
+                      >
                         {moment(comment.date).format("ddd MMM, Do - HH:mm:ss")}
                       </p>
                       <div

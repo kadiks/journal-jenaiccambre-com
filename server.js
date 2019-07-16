@@ -2,6 +2,12 @@ require("dotenv").config();
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
+const {
+  toJpg,
+  renderHomepage,
+  renderPost,
+  cacheViewer
+} = require("./src/server");
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,10 +22,28 @@ app.prepare().then(() => {
     const parsedUrl = parse(req.url, true);
     const { pathname, query } = parsedUrl;
 
-    if (pathname === "/posts") {
+    if (pathname === "/") {
+      renderHomepage(app, req, res, parsedUrl, filepath => {
+        // console.log("pathname /");
+        app.serveStatic(req, res, filepath);
+      });
+    } else if (pathname === "/posts") {
       app.render(req, res, "/allPosts", query);
     } else if (pathname.substr(0, 6) === "/posts") {
-      app.render(req, res, "/post", query);
+      const postId = pathname.split("/")[2];
+      renderPost(postId, app, req, res, parsedUrl, filepath => {
+        // app.render(req, res, "/post", query);
+        app.serveStatic(req, res, filepath);
+      });
+    } else if (pathname.substr(0, 14) === "/static/posts/") {
+      toJpg(pathname, () => {
+        handle(req, res, parsedUrl);
+      });
+    } else if (pathname === "/caches/") {
+      console.log("okokok");
+      cacheViewer(filepath => {
+        app.serveStatic(req, res, filepath);
+      });
     } else {
       handle(req, res, parsedUrl);
     }

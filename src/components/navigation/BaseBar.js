@@ -11,7 +11,7 @@ class BaseBar extends React.Component {
       return null;
     }
     return (
-      <div className="col-10 offset-1 col-md-8 offset-md-2">
+      <div className="col-11 offset-1 col-md-8 offset-md-2">
         <div
           style={{
             backgroundColor: Styles.colors.main,
@@ -19,12 +19,14 @@ class BaseBar extends React.Component {
             borderRadius: 3,
             top: -5,
             position: "absolute",
+            height: 30,
             width: 30,
-            cursor: "pointer"
+            cursor: "pointer",
+            zIndex: 1
           }}
         >
           <Link href={"/"}>
-            <a>
+            <a href="/">
               <Icon name="home" color={Styles.colors.tertiary} size={20} />
             </a>
           </Link>
@@ -34,6 +36,9 @@ class BaseBar extends React.Component {
   }
 
   displayExternals() {
+    if (process.env.SITE_ID === "kyeda") {
+      return null;
+    }
     const externals = ["photos", "cv"];
     const details = {
       photos: {

@@ -1,40 +1,27 @@
 import fetch from "isomorphic-unfetch";
 import { Post as postFilter } from "./filters";
+import { Post as postCleaner } from "./cleaners";
 
 import Config from "../Config";
 
-const wpRootUrl = `${Config.wordpress.host}${Config.wordpress.apiRoot}`;
+console.log("process.env", process.env.SITE_ID);
+
+let wpRootUrl = "";
 
 class Api {
+  constructor() {
+    // wpRootUrl = `${Config.wordpress.host}${Config.wordpress.apiRoot}`;
+    // wpRootUrl = "http://blog.jenaiccambre.com//wp-json/wp/v2";
+    wpRootUrl = `${process.env.WORDPRESS_HOST}${process.env.WORDPRESS_APIROOT}`;
+  }
   async getRecentJournal() {
-    // const res = await fetch(
-    //   `${wpRootUrl}/posts?per_page=10&categories=4&exclude_tags=81`
-    // );
-
-    // const posts = await res.json();
-    // const filtered = postFilter.excludeProtected({ posts });
-    // return filtered.slice(0, 3);
     return this.getRecentPostsByType({ type: "journal" });
   }
 
   async getRecentEssays() {
-    // const res = await fetch(
-    //   `${wpRootUrl}/posts?per_page=10&categories=31&exclude_tags=81`
-    // );
-
-    // const posts = await res.json();
-    // const filtered = postFilter.excludeProtected({ posts });
-    // return filtered.slice(0, 3);
     return this.getRecentPostsByType({ type: "essay" });
   }
   async getRecentTips() {
-    // const res = await fetch(
-    //   `${wpRootUrl}/posts?per_page=10&categories=30&exclude_tags=81`
-    // );
-
-    // const posts = await res.json();
-    // const filtered = postFilter.excludeProtected({ posts });
-    // return filtered.slice(0, 3);
     return this.getRecentPostsByType({ type: "tip" });
   }
 
@@ -45,11 +32,13 @@ class Api {
 
     const posts = await res.json();
     const filtered = postFilter.excludeProtected({ posts });
-    return filtered.slice(0, 3);
+    const reduced = filtered.slice(0, 3);
+    const cleaned = postCleaner.getAll({ posts: reduced });
+    return cleaned;
   }
 
   async getRecentPostsByType({ type }) {
-    let categoryId = 82; // 4 => journal
+    let categoryId = 82; // 82 => journal
     if (type === "essay") {
       categoryId = 31;
     }
@@ -62,7 +51,8 @@ class Api {
   async getPost({ id }) {
     const res = await fetch(`${wpRootUrl}/posts/${id}`);
     const post = await res.json();
-    return post;
+    const clean = postCleaner.getOne({ post });
+    return clean;
   }
 
   async getCommentsByPost({ id }) {

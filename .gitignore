@@ -1,3 +1,5 @@
 .next/*
 node_modules/*
-src/utils/Config.js
+.env
+static/posts/*
+static/cache.json
