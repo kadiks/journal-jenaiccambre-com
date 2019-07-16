@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
-  "author": "",
+  "author": "Jénaïc Cambré",
   "license": "ISC",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
