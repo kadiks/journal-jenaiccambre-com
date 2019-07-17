@@ -9,7 +9,8 @@ const {
   toJpg,
   renderHomepage,
   renderPost,
-  cacheViewer
+  cacheViewer,
+  renderSitemap
 } = require("./src/server");
 
 const PORT = process.env.PORT || 3000;
@@ -28,6 +29,12 @@ app.prepare().then(() => {
     if (pathname === "/") {
       renderHomepage(app, req, res, parsedUrl, filepath => {
         console.log("pathname /");
+        app.serveStatic(req, res, filepath);
+      });
+    } else if (pathname === "/robots.txt") {
+      app.serveStatic(req, res, "static/robots.txt");
+    } else if (pathname === "/sitemap.xml") {
+      renderSitemap(app, req, res, parsedUrl, filepath => {
         app.serveStatic(req, res, filepath);
       });
     } else if (pathname === "/posts") {

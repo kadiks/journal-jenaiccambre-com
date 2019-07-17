@@ -3,3 +3,5 @@ node_modules/*
 .env
 static/posts/*
 static/cache.json
+static/seo/sitemap.xml
+prototype/*

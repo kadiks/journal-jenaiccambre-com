@@ -4,6 +4,7 @@ const configs = {
   jenaic: {
     id: "jenaic",
     site: {
+      name: "Journal - Jénaïc Cambré",
       protocol: "https",
       host: "jenaiccambre.com"
     },
@@ -16,6 +17,7 @@ const configs = {
   kyeda: {
     id: "kyeda",
     site: {
+      name: "Kyeda",
       protocol: "https",
       host: "kyeda.app"
     },
@@ -27,4 +29,11 @@ const configs = {
   }
 };
 
-module.exports = { ...configs[id], ...configs };
+const selectedConfig = JSON.parse(JSON.stringify(configs[id]));
+
+if (process.env.NODE_ENV !== "production") {
+  selectedConfig.site.protocol = "http";
+  selectedConfig.site.host = `localhost:${process.env.PORT}`;
+}
+
+module.exports = { ...selectedConfig, ...configs };

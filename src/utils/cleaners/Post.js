@@ -1,7 +1,8 @@
-import Entities from "html-entities";
-import sanitizeHtml from "sanitize-html";
+const Entities = require("html-entities");
+const sanitizeHtml = require("sanitize-html");
+const _ = require("lodash");
 
-import Config from "../../Config";
+const Config = require("../../Config");
 
 const entities = new Entities.AllHtmlEntities();
 
@@ -9,10 +10,15 @@ const getOne = ({ post }) => {
   const baseUrl = `${Config.site.protocol}://${Config.site.host}`;
   const baseLink = post.link.replace(process.env.WORDPRESS_HOST, "");
   post.destLink = `/posts/${post.id}${baseLink}`;
+  post.absoluteDestLink = `${baseUrl}${post.destLink}`;
   post.shareImageLink = `${baseUrl}/static/posts/${post.id}.jpg`;
   post.title.clean = entities.decode(post.title.rendered);
   post.excerpt.clean = sanitizeHtml(post.excerpt.rendered, {
     allowedTags: false
+  });
+  post.meta = {};
+  post.yoast_meta.forEach(meta => {
+    post.meta[meta.name || meta.property] = meta.content;
   });
   post.mainCategory =
     post.categories.indexOf(82) >= 0
@@ -28,4 +34,4 @@ const getAll = ({ posts = [] }) => {
   return cleanPosts;
 };
 
-export default { getOne, getAll };
+module.exports = { getOne, getAll };

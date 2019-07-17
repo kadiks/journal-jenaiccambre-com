@@ -5,4 +5,4 @@ const excludeProtected = ({ posts = [] }) => {
   return notProtectedPosts;
 };
 
-export default { excludeProtected };
+module.exports = { excludeProtected };

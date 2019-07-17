@@ -23,15 +23,18 @@
     "fs-extra": "^8.1.0",
     "html-entities": "^1.2.1",
     "isomorphic-unfetch": "^3.0.0",
+    "lodash": "^4.17.14",
     "moment": "^2.24.0",
     "next": "^8.1.0",
     "next-images": "^1.1.2",
+    "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-ga": "^2.6.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "sanitize-html": "^1.20.1",
+    "sitemap": "^3.2.2",
     "styled-components": "^4.2.0",
     "url": "^0.11.0"
   }

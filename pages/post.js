@@ -11,12 +11,12 @@ import { MetaShares } from "../src/components/social";
 
 class Post extends React.Component {
   static async getInitialProps({ req }) {
-    console.log("pages/post req.url", req.url);
+    // console.log("pages/post req.url", req.url);
     const matches = req.url.replace("/posts/", "").match(/^\d+/i);
 
-    console.log("matches", matches);
+    // console.log("matches", matches);
     const id = parseInt(matches[0]);
-    console.log("id", id);
+    // console.log("id", id);
     const post = await Api.getPost({ id });
 
     const comments = await Api.getCommentsByPost({ id });

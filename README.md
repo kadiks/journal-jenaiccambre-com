@@ -7,6 +7,11 @@ Generate social media card image based on the post title
 
 ## Changelog
 
+### 0.2.2
+
+- SEO: add robots.txt
+- SEO: generate dynamically sitemap.xml
+
 ### 0.2.1
 
 - Add gzip compression
@@ -23,7 +28,16 @@ Generate social media card image based on the post title
 
 ### Deployment - Kyeda
 
-rsync -avz -e 'ssh' ./journal-jenaiccambre-com <user>@<host>:/var/www/kyeda.app --exclude node_modules --exclude assets --exclude static/posts --exclude .next --exclude .git --exclude .gitignore --exclude .env
+- rsync -avz -e 'ssh' ./journal-jenaiccambre-com <user>@<host>:/var/www/kyeda.app --exclude node_modules --exclude assets --exclude static/posts --exclude .next --exclude .git --exclude .gitignore --exclude .env
+- ssh <user>@<host>
+- cd /var/www/kyeda.app/journal-jenaiccambre-com
+- rm -rf static/posts
+- mkdir static/posts
+- nvm use 10
+- npm i
+- npm run build
+- nvm use 8
+- pm2 restart kyeda.app
 
 ### Deployment - Jenaic
 
