@@ -11,6 +11,7 @@ Generate social media card image based on the post title
 
 - SEO: add robots.txt
 - SEO: generate dynamically sitemap.xml
+- Add forceReload capability
 
 ### 0.2.1
 
