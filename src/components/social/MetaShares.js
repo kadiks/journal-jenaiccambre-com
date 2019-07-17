@@ -1,5 +1,12 @@
-import { FB } from ".";
+import { Fragment } from "react";
+import { FB, Twitter, SEO } from ".";
 
 export default ({ post }) => {
-  return <FB post={post} />;
+  return (
+    <Fragment>
+      <SEO post={post} />
+      <FB post={post} />
+      <Twitter post={post} />
+    </Fragment>
+  );
 };
