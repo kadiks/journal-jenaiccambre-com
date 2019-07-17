@@ -4,6 +4,13 @@ const path = require("path");
 
 const renderHomepage = async (app, req, res, parsedUrl, cb) => {
   const filepath = "./static/posts/homepage.html";
+
+  if (typeof parsedUrl.query !== "undefined") {
+    if (parsedUrl.query.forceReload === "true") {
+      await reRender(filepath, app, req, res, parsedUrl);
+    }
+  }
+
   if (fs.existsSync(filepath) === false) {
     await reRender(filepath, app, req, res, parsedUrl);
   }
