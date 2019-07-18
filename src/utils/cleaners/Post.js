@@ -7,12 +7,16 @@ const Config = require("../../Config");
 const entities = new Entities.AllHtmlEntities();
 
 const getOne = ({ post }) => {
-  const baseUrl = `${Config.site.protocol}://${Config.site.host}`;
+  let baseUrl = `${Config.site.protocol}://${Config.site.host}`;
   const baseLink = post.link.replace(process.env.WORDPRESS_HOST, "");
-  post.destLink = `/posts/${post.id}${baseLink}`;
+  post.destLink = `/posts/${baseLink}`;
   post.absoluteDestLink = `${baseUrl}${post.destLink}`;
   post.shareImageLink = `${baseUrl}/static/posts/${post.id}.jpg`;
   post.title.clean = entities.decode(post.title.rendered);
+  post.content.rendered = post.content.rendered.replace(
+    new RegExp(process.env.WORDPRESS_HOST, "gi"),
+    `${baseUrl}/posts`
+  );
   post.excerpt.clean = sanitizeHtml(post.excerpt.rendered, {
     allowedTags: false
   });

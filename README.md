@@ -5,7 +5,17 @@ Creates 2 distincts websites : [jenaiccambre.com](jenaiccambre.com) and [kyeda.a
 Progressive caching: reloads the index once a day. Only the first visitor takes the load. Then caches all posts forever.
 Generate social media card image based on the post title
 
+## Roadmap
+
+- Create error page
+- Create listing posts page with pagination
+- Update all previous post IDs template to include an ID
+
 ## Changelog
+
+### 0.2.3
+
+- Change content so that internal link to goes to destination website (not back to source)
 
 ### 0.2.2
 
