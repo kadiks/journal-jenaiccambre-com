@@ -9,7 +9,7 @@ const entities = new Entities.AllHtmlEntities();
 const getOne = ({ post }) => {
   let baseUrl = `${Config.site.protocol}://${Config.site.host}`;
   const baseLink = post.link.replace(process.env.WORDPRESS_HOST, "");
-  post.destLink = `/posts/${baseLink}`;
+  post.destLink = `/posts${baseLink}`;
   post.absoluteDestLink = `${baseUrl}${post.destLink}`;
   post.shareImageLink = `${baseUrl}/static/posts/${post.id}.jpg`;
   post.title.clean = entities.decode(post.title.rendered);
