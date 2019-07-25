@@ -4,6 +4,12 @@ import { Api, Styles } from "../../utils";
 
 import moment from "moment";
 
+const containerStyle = {
+  backgroundColor: Styles.colors.main,
+  marginTop: 15,
+  marginBottom: 15
+};
+
 class Comments extends React.Component {
   // state = {
   //   comments: []
@@ -21,12 +27,7 @@ class Comments extends React.Component {
     const { comments } = this.props;
     if (comments.length === 0) {
       return (
-        <div
-          className="row comments"
-          style={{
-            backgroundColor: Styles.colors.main
-          }}
-        >
+        <div className="row comments" style={containerStyle}>
           <div className="col-10 offset-1 col-lg-8 offset-lg-2">
             <h3 style={{ color: Styles.colors.tertiary }}>
               No comments yet. Be the first to write one.
@@ -39,7 +40,7 @@ class Comments extends React.Component {
       <div
         className="row comments"
         style={{
-          backgroundColor: Styles.colors.main,
+          ...containerStyle,
           paddingBottom: 15
         }}
       >

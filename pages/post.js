@@ -7,7 +7,7 @@ import moment from "moment";
 import { Api, Styles } from "../src/utils";
 import { Comments, Form } from "../src/components/comment";
 import { BaseBar } from "../src/components/navigation";
-import { MetaShares } from "../src/components/social";
+import { MetaShares, ShareThisPost } from "../src/components/social";
 
 class Post extends React.Component {
   static async getInitialProps({ req }) {
@@ -120,6 +120,7 @@ class Post extends React.Component {
             </time>
           </div>
         </div>
+        <ShareThisPost />
         <div className="row">
           <div className="col-10 offset-1 col-md-8 offset-md-2">
             <div
@@ -130,6 +131,7 @@ class Post extends React.Component {
             />
           </div>
         </div>
+        <ShareThisPost />
         <Comments postId={id} comments={this.state.comments} />
         <div className="row">
           <div className="col-10 offset-1 col-md-8 offset-md-2">

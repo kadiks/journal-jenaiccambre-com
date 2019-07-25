@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { FB, Twitter, SEO } from ".";
+import { FB, Twitter, SEO, ShareThisHead } from ".";
 
 export default ({ post }) => {
   return (
@@ -7,6 +7,7 @@ export default ({ post }) => {
       <SEO post={post} />
       <FB post={post} />
       <Twitter post={post} />
+      <ShareThisHead />
     </Fragment>
   );
 };

@@ -5,12 +5,15 @@ import { Favicon } from "../src/components/core";
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
+    console.log("pages/_document initialProps");
+    // console.log("pages/_document initialProps", initialProps);
+    // console.log("pages/_document initialProps", ctx);
     return { ...initialProps };
   }
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta charSet="utf8" />
           <meta

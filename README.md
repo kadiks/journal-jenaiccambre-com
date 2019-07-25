@@ -10,6 +10,10 @@ Generate social media card image based on the post title
 - Create error page
 - Create listing posts page with pagination
 - Update all previous post IDs template to include an ID
+- Add canonical link that always go to Kyeda for Tips, essay and quotes, but to jenaiccambre for Journal
+- EU cookie disclaimer
+- Display newsletter popup with a slick animate.css
+- Find a way to have every html lang attribute based on the post
 
 ## Changelog
 
@@ -44,6 +48,7 @@ Generate social media card image based on the post title
 - cd /var/www/kyeda.app/journal-jenaiccambre-com
 - rm -rf static/posts
 - mkdir static/posts
+- pm2 stop kyeda.app
 - nvm use 10
 - npm i
 - npm run build
