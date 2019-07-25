@@ -49,7 +49,7 @@ class Api {
   }
 
   async getPost({ id }) {
-    const res = await fetch(`${wpRootUrl}/posts/${id}`);
+    const res = await fetch(`${wpRootUrl}/posts/${id}?_embed`);
     const post = await res.json();
     const clean = postCleaner.getOne({ post });
     return clean;

@@ -62,7 +62,7 @@ class Post extends React.Component {
     // console.log("pages/post#render");
     // console.log("pages/post#render props", this.props);
 
-    const { title, content, id, date } = this.props.post;
+    const { title, content, id, date, _embedded } = this.props.post;
     return (
       <div className="container-fluid">
         <Head>
@@ -120,6 +120,13 @@ class Post extends React.Component {
             </time>
           </div>
         </div>
+        {typeof _embedded["wp:featuredmedia"] !== "undefined" && (
+          <div className="row">
+            <div className="col-10 offset-1 col-md-8 offset-md-2" style={{textAlign: 'center'}}>
+              <img src={`/static/posts/${id}.jpg`} alt="" />
+            </div>
+          </div>
+        )}
         <ShareThisPost />
         <div className="row">
           <div className="col-10 offset-1 col-md-8 offset-md-2">
