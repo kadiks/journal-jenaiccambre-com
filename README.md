@@ -17,6 +17,11 @@ Generate social media card image based on the post title
 
 ## Changelog
 
+### 0.2.4
+
+- Add social media button to share
+- Display featured media if existing instead of bland title
+
 ### 0.2.3
 
 - Change content so that internal link to goes to destination website (not back to source)

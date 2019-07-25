@@ -7,21 +7,19 @@ const Entities = require("html-entities");
 const entities = new Entities.AllHtmlEntities();
 
 const WIDTH = 600;
-const HEIGHT = 315;
+const HEIGHT = 400;
 const PADDING = 15;
 
 const fs = require("fs-extra");
 
-const getPost = (id, cb) => {
+const getPost = async ({ id }) => {
   const wpRootUrl = `${process.env.WORDPRESS_HOST}${
     process.env.WORDPRESS_APIROOT
   }`;
 
-  request(`${wpRootUrl}/posts/${id}`).then(req => {
-    const json = JSON.parse(req);
-    // console.log("json", json);
-    cb(json);
-  });
+  const req = await request(`${wpRootUrl}/posts/${id}?_embed`);
+  const json = JSON.parse(req);
+  return json;
 };
 
 // https://stackoverflow.com/a/4478894
@@ -58,7 +56,7 @@ const printAt = (context, text, x, y, lineHeight, fitWidth) => {
     context.fillText(words.join(" "), x, y + lineHeight * currentLine);
 };
 
-const generate = (pathname, cb) => {
+const generate = async (pathname, cb) => {
   const postId = path.basename(pathname, ".jpg");
 
   const filepath = pathname.replace("/", "");
@@ -71,19 +69,35 @@ const generate = (pathname, cb) => {
 
   console.log("src/server/toJpg Will be generated");
 
-  const post = getPost(postId, post => {
+  const post = await getPost({ id: postId });
+
+  const canvas = createCanvas(WIDTH, HEIGHT);
+  const ctx = canvas.getContext("2d");
+  let image = null;
+
+  if (typeof post._embedded["wp:featuredmedia"] !== "undefined") {
+    const featuredmedia = post._embedded["wp:featuredmedia"][0];
+    const imageUrl = featuredmedia.source_url;
+    console.log("imageUrl", imageUrl);
+    image = await loadImage(imageUrl);
+
+    const oriWidth = featuredmedia.media_details.width;
+    const oriHeight = featuredmedia.media_details.height;
+
+    const heightRatio = (WIDTH / oriWidth) * oriHeight;
+    console.log("heightRatio", heightRatio);
+    ctx.drawImage(image, 0, 0, WIDTH, heightRatio);
+  } else {
     const str =
       entities.decode(post.title.rendered) || "Personal development blog";
 
-    const canvas = createCanvas(WIDTH, HEIGHT);
-    const ctx = canvas.getContext("2d");
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
     // Write "Awesome!"
     ctx.font = "30px Arial";
     ctx.fillStyle = "black";
     // ctx.fillText(str, 50, 100);
-    printAt(ctx, str, 230, 50, 45, 355);
+    printAt(ctx, str, 230, 100, 45, 355);
 
     ctx.fillStyle = process.env.SITE_ID === "kyeda" ? "#374976" : "#B90000";
     ctx.font = "20px Arial";
@@ -96,31 +110,17 @@ const generate = (pathname, cb) => {
       HEIGHT - PADDING - 20
     );
 
-    // Draw line under text
-    // var text = ctx.measureText(str);
-    // // ctx.strokeStyle = "rgba(0,0,0,0.5)";
-    // // ctx.beginPath();
-    // // ctx.lineTo(50, 102);
-
-    // // ctx.lineTo(50 + text.width, 102);
-    // // ctx.stroke();
-
-    // Draw cat with lime helmet
-    loadImage(
+    image = await loadImage(
       process.env.SITE_ID === "kyeda"
         ? "static/img/kyeda.png"
         : "static/img/jenaic_cambre.jpg"
-    ).then(async image => {
-      ctx.drawImage(image, 15, 50, 200, 200);
+    );
+    ctx.drawImage(image, 15, 50, 200, 200);
+  }
 
-      //   console.log('<img src="' + canvas.toDataURL() + '" />');
-
-      const buf = canvas.toBuffer("image/jpeg", { quality: 0.95 });
-      fs.writeFile(filepath, buf, () => {
-        cb();
-      });
-    });
-  });
+  const buf = canvas.toBuffer("image/jpeg", { quality: 0.95 });
+  await fs.writeFile(filepath, buf);
+  cb();
 };
 
 module.exports = generate;
