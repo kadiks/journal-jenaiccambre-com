@@ -14,8 +14,16 @@ Generate social media card image based on the post title
 - EU cookie disclaimer
 - Display newsletter popup with a slick animate.css
 - Find a way to have every html lang attribute based on the post
+- Create a page for the practical guide (100 ways of living an extraordinary life (with ordinary means)) => Fixed page for SEO
+- Find a way to display all the post quotes in the blog so they can be SEO searched
+- All the post on the website must be shareable in their original format
+- Ability to search quotes by categories and filter them (fixed page for SEO)
 
 ## Changelog
+
+### 0.2.5
+
+- Add 100 tips page in french
 
 ### 0.2.4
 

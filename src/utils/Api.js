@@ -14,6 +14,15 @@ class Api {
     // wpRootUrl = "http://blog.jenaiccambre.com//wp-json/wp/v2";
     wpRootUrl = `${process.env.WORDPRESS_HOST}${process.env.WORDPRESS_APIROOT}`;
   }
+
+  async getFrenchExtraordinaryTips() {
+    return this.getRecentPostByCategoryId({
+      categoryId: 85,
+      perPage: 100,
+      postNumber: 100
+    });
+  }
+
   async getRecentJournal() {
     return this.getRecentPostsByType({ type: "journal" });
   }
@@ -25,14 +34,18 @@ class Api {
     return this.getRecentPostsByType({ type: "tip" });
   }
 
-  async getRecentPostByCategoryId({ categoryId }) {
+  async getRecentPostByCategoryId({
+    categoryId,
+    postNumber = 3,
+    perPage = 10
+  }) {
     const res = await fetch(
-      `${wpRootUrl}/posts?per_page=10&categories=${categoryId}`
+      `${wpRootUrl}/posts?per_page=${perPage}&categories=${categoryId}`
     );
 
     const posts = await res.json();
     const filtered = postFilter.excludeProtected({ posts });
-    const reduced = filtered.slice(0, 3);
+    const reduced = filtered.slice(0, postNumber);
     const cleaned = postCleaner.getAll({ posts: reduced });
     return cleaned;
   }
