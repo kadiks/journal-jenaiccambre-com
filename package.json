@@ -33,7 +33,7 @@
     "react-ga": "^2.6.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
-    "sanitize-html": "^1.20.1",
+    "sanitize-html": "^2.3.2",
     "sitemap": "^3.2.2",
     "styled-components": "^4.2.0",
     "url": "^0.11.0"
